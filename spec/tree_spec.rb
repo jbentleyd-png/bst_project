@@ -2,11 +2,11 @@
 
 require_relative '../lib/tree'
 
-describe "" do
-  describe "" do
-    it "" do
-      
-      expect(true).to eq(true)
-    end
+
+describe "build_tree" do
+  it "returns the root node (midpoint)" do
+    test = Tree.new([1, 2, 3])
+    
+    expect(test.build_tree([1, 2, 3])).to eq(2)
   end
 end
