@@ -2,7 +2,7 @@ require_relative 'node'
 
 class Tree
   
-  attr_accessor :tree
+  attr_accessor :root
 
   def build_tree(arr)
     root_position = (arr.length / 2).floor + ((arr.length % 2) - 1) # odd length: + 0; even length: - 1 (for a left-shift)
@@ -18,15 +18,21 @@ class Tree
 
   def initialize(arr)
     cleaned_arr = arr.sort.uniq
-    @tree = self.build_tree(cleaned_arr)  
+    @root = self.build_tree(cleaned_arr)  
   end
 
-  def pretty_print(node = @tree, prefix = '', is_left: true)
+  def pretty_print(node = @root, prefix = '', is_left: true)
     return unless node
 
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false)
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", is_left: true)
+  end
+
+  def include?(value)
+    return true if value == @root.value 
+
+    false
   end
 
 
