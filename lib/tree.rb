@@ -30,8 +30,12 @@ class Tree
   end
 
   def include?(value)
-    return true if value == @root.value 
-
+    current = @root
+    loop do
+      return true if value == current.value 
+      break if current.right.nil?
+      current = value < current.value ? current.left : current.right
+    end
     false
   end
 

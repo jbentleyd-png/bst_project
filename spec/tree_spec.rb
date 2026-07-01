@@ -66,4 +66,15 @@ describe "include?" do
     test = Tree.new([64])
     expect(test.include?(74)).to eq(false)
   end
+
+  it "returns true two layers deep" do 
+    test = Tree.new([1, 2, 3, 4])
+    expect(test.include?(4)).to eq(true)
+  end
+
+  it "returns true three layers deep" do 
+    input = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+    test = Tree.new(input)
+    expect(test.include?(6345)).to eq(true)
+  end
 end
