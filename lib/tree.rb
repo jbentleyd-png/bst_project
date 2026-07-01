@@ -65,30 +65,53 @@ class Tree
       current = value < current.value ? current.left : current.right
     end
 
+    # below is for clarity. We till traverse again if there are two children below the deletion node.
     deletion_node = current
+    del_node_parent = previous
+
     p "deletion node value = #{deletion_node.value}"
     p "deletion node left = #{deletion_node.left}"
     p "deletion node right = #{deletion_node.right}"
     # NO children:
     if deletion_node.left.nil? && deletion_node.right.nil?
        p "entered no child condition"
-      if previous.nil? # root edge case
+      if del_node_parent.nil? # root edge case
         @root = nil
         return
       end
-      relationship = value < previous.value ? "left" : "right"
-      previous.public_send("#{relationship}=", nil)
+      relationship = value < del_node_parent.value ? "left" : "right"
+      del_node_parent.public_send("#{relationship}=", nil)
     end
 
     # one child policy:
     if (deletion_node.left.nil? && !deletion_node.right.nil?) || (!deletion_node.left.nil? && deletion_node.right.nil?)
 
       p "entered one child condition"
-      parent_relationship = value < previous.value ? "left" : "right"
+      parent_relationship = value < del_node_parent.value ? "left" : "right"
       child_relationship = deletion_node.left ? "left" : "right"
-      previous.public_send("#{parent_relationship}=", deletion_node.public_send(child_relationship))
+      del_node_parent.public_send("#{parent_relationship}=", deletion_node.public_send(child_relationship))
       
     end
+
+    # TWO child policy:
+    if !deletion_node.left.nil? && !deletion_node.right.nil?
+      p "entered two child condition"
+      
+      loop do # find the smallest big guy aka "inorder successor":
+        break if current.left.nil?
+        previous = current
+        current = current.left
+      end
+
+      # switch deleted node's value with that of its successor:
+      deletion_node.value = current.value
+      #remove reference to the inorder successor from its parent:
+      relationship = value > current.value ? "left" : "right"
+      previous.public_send("#{relationship}=", nil) # "current as an extra pointer is critical here"
+
+
+    end
+
   end
 
 end

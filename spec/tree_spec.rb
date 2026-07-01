@@ -148,6 +148,15 @@ describe "delete" do
     test = Tree.new([1, 2, 3, 4])
     test.pretty_print
     test.delete(3)
+    test.pretty_print
     expect(test.root.right.value).to eq(4)
+  end
+
+  it "deletes a node with two children" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    test.pretty_print
+    test.delete(12)
+    test.pretty_print
+    expect(test.root.right.value).to eq(7)
   end
 end
