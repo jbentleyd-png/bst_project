@@ -83,6 +83,13 @@ describe "include?" do
     test = Tree.new(input)
     expect(test.include?(6345)).to eq(true)
   end
+
+  it "returns false when there is no root" do
+    test = Tree.new([])
+    expect(test.include?(6345)).to eq(false)
+  end
+
+
 end 
 
 describe "insert" do
@@ -109,5 +116,24 @@ describe "insert" do
     test.insert(4)
     test.pretty_print
     expect(test.root.right.right.left.value).to eq(4)
+  end
+end
+
+describe "delete" do
+  it "deletes nothing if the value is not found" do
+    test = Tree.new([74])
+    expect(test.delete(4)).to eq(nil)
+  end
+
+  it "deletes a leaf node" do
+    test = Tree.new([1, 2, 3, 4])
+    test.delete(4)
+    expect(test.include?(4)).to eq(false)
+  end
+
+  it "deletes a leaf node that is also the root node" do
+    test = Tree.new([4])
+    test.delete(4)
+    expect(test.root).to eq(nil)
   end
 end

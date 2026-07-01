@@ -50,6 +50,29 @@ class Tree
     current.public_send("#{relationship}=", Node.new(value)) # NOT:     current.public_send(relationship) = Node.new(value)
     false
   end
-  # 
+  
+  def delete(value)
+    current = @root
+    previous = nil
+    
+    loop do # traverse for deletion node
+      break if value == current.value # FOUND IT
+      return if current.right.nil? # not in tree
+      previous = current
+      current = value < current.value ? current.left : current.right
+    end
+
+    deletion_node = current
+
+    # NO children:
+    if deletion_node.left.nil? && deletion_node.right.nil?
+      if deletion_node == @root
+        @root = nil
+        return
+      end
+      relationship = value < previous.value ? "left" : "right"
+      previous.public_send("#{relationship}=", nil)
+    end
+  end
 
 end
