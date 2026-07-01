@@ -53,11 +53,17 @@ describe "pretty_print" do
     test = Tree.new(input)
     expect(test.pretty_print).to eq(nil)
   end
+
+  it "confirms my modeling" do
+    input = [1, 3, 6, 7, 12, 15]
+    test = Tree.new(input)
+    expect(test.pretty_print).to eq(nil)
+  end
 end
 
 describe "include?" do
   
-  it "works when the root value of the tree mathces" do
+  it "works when the root value of the tree matches" do
     test = Tree.new([74])
     expect(test.include?(74)).to eq(true)
   end
@@ -76,5 +82,32 @@ describe "include?" do
     input = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
     test = Tree.new(input)
     expect(test.include?(6345)).to eq(true)
+  end
+end 
+
+describe "insert" do
+  
+  it "returns nil when the root value of the tree matches" do
+    test = Tree.new([74])
+    expect(test.insert(74)).to eq(nil)
+  end
+
+  it "adds a Node" do
+    test = Tree.new([64])
+    test.insert(74)
+    expect(test.include?(74)).to eq(true)
+  end
+
+  it "adds a node to the correct side" do 
+    test = Tree.new([64])
+    test.insert(74)
+    expect(test.root.right.value).to eq(74)
+  end
+
+  it "links nodes together as expected" do 
+    test = Tree.new([1, 2, 3, 5])
+    test.insert(4)
+    test.pretty_print
+    expect(test.root.right.right.left.value).to eq(4)
   end
 end

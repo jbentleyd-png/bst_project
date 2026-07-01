@@ -39,5 +39,17 @@ class Tree
     false
   end
 
+  def insert(value) 
+    current = @root
+    loop do
+      return nil if value == current.value 
+      break if current.right.nil? # reached a terminal node 
+      current = value < current.value ? current.left : current.right # traverse
+    end
+    relationship = value < current.value ? "left" : "right"
+    current.public_send("#{relationship}=", Node.new(value)) # NOT:     current.public_send(relationship) = Node.new(value)
+    false
+  end
+  # 
 
 end
