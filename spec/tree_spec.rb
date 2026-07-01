@@ -165,7 +165,7 @@ describe "delete" do
     test.pretty_print
     test.delete(12)
     test.pretty_print
-    expect(test.root.right.value).to eq(7)
+    expect(test.root.right.value).to eq(15)
   end
 
   it "deletes a node on the LEFT wxith two children" do
@@ -173,7 +173,7 @@ describe "delete" do
     test.pretty_print
     test.delete(2)
     test.pretty_print
-    expect(test.root.left.value).to eq(1)
+    expect(test.root.left.value).to eq(3)
   end
 
   it "...which is also the root node" do

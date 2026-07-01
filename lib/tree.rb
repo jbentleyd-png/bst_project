@@ -107,8 +107,9 @@ class Tree
       #end
 
       # find the smallest big guy aka "inorder successor":
-      # current = current.right unless current.right.nil?
-      # previous = current unless current.right.nil?
+      previous = current
+      current = current.right
+
       loop do 
         break if current.left.nil?
         previous = current
@@ -117,9 +118,12 @@ class Tree
 
       # switch deleted node's value with that of its successor:
       deletion_node.value = current.value
-      #remove reference to the inorder successor from its parent:
-      relationship = value > current.value ? "left" : "right"
+      # remove reference to the inorder successor from its parent:
+      relationship = current.value < previous.value ? "left" : "right"
       previous.public_send("#{relationship}=", nil) # "current as an extra pointer is critical here"
+      p "previous value: #{previous.value}"
+      p "previous right: #{previous.right}"
+      p "previous left: #{previous.left}"
 
 
     end
