@@ -5,11 +5,13 @@ class Tree
   attr_accessor :root
 
   def build_tree(arr)
+    return nil if arr == [] # prevents empty left nodes from being printed recursively.
     root_position = (arr.length / 2).floor + ((arr.length % 2) - 1) # odd length: + 0; even length: - 1 (for a left-shift)
     root_value = arr[root_position]
     left_side = arr[0...root_position]
     right_side = arr[(root_position + 1)..]
-    return Node.new(root_value) if right_side == []
+
+    return Node.new(root_value) if right_side == [] 
 
 
     Node.new(root_value, build_tree(left_side), build_tree(right_side))
@@ -30,6 +32,7 @@ class Tree
   end
 
   def include?(value)
+    return false if @root == nil
     current = @root
     loop do
       return true if value == current.value 
