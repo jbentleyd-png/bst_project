@@ -16,7 +16,19 @@ describe "build_tree" do
     expect(test.tree.value).to eq(4)
   end
 
-  xit "returns the root node (midpoint) on an unordered array with duplicates" do
+  it "base case test 1" do
+    test = Tree.new([1])
+    
+    expect(test.tree.value).to eq(1)
+  end
+
+  it "base case test 2" do
+    test = Tree.new([1, 2])
+    
+    expect(test.tree.value).to eq(1)
+  end
+
+  it "returns the root node (midpoint) on an unordered array with duplicates" do
     input = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
     test = Tree.new(input)
     expect(test.tree.value).to eq(8)

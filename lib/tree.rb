@@ -13,12 +13,11 @@ class Tree
     p left_side
     right_side = arr[(root_position + 1)..]
     p right_side
-    return Node.new(root_value) # if left_side == root_value
-    # maybe a different thing to check?
+    return Node.new(root_value) if left_side == []
 
 
-    # root_node = Node.new(root_value, build_tree(left_side), build_tree(right_side))
-    # root_node
+    Node.new(root_value, build_tree(left_side), build_tree(right_side))
+    
   end
 
   def initialize(arr)
