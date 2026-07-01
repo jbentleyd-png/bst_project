@@ -2,15 +2,17 @@ require_relative 'node'
 
 class Tree
   
+  attr_accessor :tree
 
-  def build_tree(array)
-    cleaned_arr = array.sort.uniq
-    root_node = cleaned_arr[(cleaned_arr.length / 2).floor]
+  def build_tree(arr)
+    root_value = arr[(arr.length / 2).floor]
+    root_node = Node.new(root_value)
     root_node
   end
 
-  def initialize(array)
-    @tree = self.build_tree(array)  
+  def initialize(arr)
+    cleaned_arr = arr.sort.uniq
+    @tree = self.build_tree(cleaned_arr)  
   end
 
 
