@@ -13,7 +13,7 @@ class Tree
     p left_side
     right_side = arr[(root_position + 1)..]
     p right_side
-    return Node.new(root_value) if left_side == []
+    return Node.new(root_value) if right_side == []
 
 
     Node.new(root_value, build_tree(left_side), build_tree(right_side))
