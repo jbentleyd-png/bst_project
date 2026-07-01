@@ -63,15 +63,28 @@ class Tree
     end
 
     deletion_node = current
-
+    p "deletion node value = #{deletion_node.value}"
+    p "deletion node left = #{deletion_node.left}"
+    p "deletion node right = #{deletion_node.right}"
     # NO children:
     if deletion_node.left.nil? && deletion_node.right.nil?
-      if deletion_node == @root
+       p "entered no child condition"
+      if previous.nil? # root edge case
         @root = nil
         return
       end
       relationship = value < previous.value ? "left" : "right"
       previous.public_send("#{relationship}=", nil)
+    end
+
+    # one child policy:
+    if (deletion_node.left.nil? && !deletion_node.right.nil?) || (!deletion_node.left.nil? && deletion_node.right.nil?)
+
+      p "entered one child condition"
+      parent_relationship = value < previous.value ? "left" : "right"
+      child_relationship = deletion_node.left ? "left" : "right"
+      previous.public_send("#{parent_relationship}=", deletion_node.public_send(child_relationship))
+      
     end
   end
 
