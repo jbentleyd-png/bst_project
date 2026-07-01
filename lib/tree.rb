@@ -68,6 +68,7 @@ class Tree
     # below is for clarity. We till traverse again if there are two children below the deletion node.
     deletion_node = current
     del_node_parent = previous
+    del_parent_relationship = value < del_node_parent.value ? "left" : "right"
 
     p "deletion node value = #{deletion_node.value}"
     p "deletion node left = #{deletion_node.left}"
@@ -79,17 +80,20 @@ class Tree
         @root = nil
         return
       end
-      relationship = value < del_node_parent.value ? "left" : "right"
-      del_node_parent.public_send("#{relationship}=", nil)
+      del_node_parent.public_send("#{del_parent_relationship}=", nil)
     end
 
     # one child policy:
     if (deletion_node.left.nil? && !deletion_node.right.nil?) || (!deletion_node.left.nil? && deletion_node.right.nil?)
+      child_relationship = deletion_node.left ? "left" : "right"
 
       p "entered one child condition"
-      parent_relationship = value < del_node_parent.value ? "left" : "right"
-      child_relationship = deletion_node.left ? "left" : "right"
-      del_node_parent.public_send("#{parent_relationship}=", deletion_node.public_send(child_relationship))
+      if del_node_parent.nil? # root edge case
+        @root = deletion_node.public_send(child_relationship)
+        return
+      end
+
+      del_node_parent.public_send("#{del_parent_relationship}=", deletion_node.public_send(child_relationship))
       
     end
 
@@ -97,7 +101,15 @@ class Tree
     if !deletion_node.left.nil? && !deletion_node.right.nil?
       p "entered two child condition"
       
-      loop do # find the smallest big guy aka "inorder successor":
+      #if del_node_parent.nil? # root edge case
+       # @root = deletion_node.public_send(child_relationship)
+        #return
+      #end
+
+      # find the smallest big guy aka "inorder successor":
+      # current = current.right unless current.right.nil?
+      # previous = current unless current.right.nil?
+      loop do 
         break if current.left.nil?
         previous = current
         current = current.left
