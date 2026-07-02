@@ -68,7 +68,9 @@ class Tree
     # below is for clarity. We till traverse again if there are two children below the deletion node.
     deletion_node = current
     del_node_parent = previous
-    del_parent_relationship = value < del_node_parent.value ? "left" : "right"
+    unless deletion_node == @root # guard clause for 2 children
+      del_parent_relationship = value < del_node_parent.value ? "left" : "right"
+    end
 
     p "deletion node value = #{deletion_node.value}"
     p "deletion node left = #{deletion_node.left}"
@@ -100,11 +102,6 @@ class Tree
     # TWO child policy:
     if !deletion_node.left.nil? && !deletion_node.right.nil?
       p "entered two child condition"
-      
-      #if del_node_parent.nil? # root edge case
-       # @root = deletion_node.public_send(child_relationship)
-        #return
-      #end
 
       # find the smallest big guy aka "inorder successor":
       previous = current
@@ -121,10 +118,6 @@ class Tree
       # remove reference to the inorder successor from its parent:
       relationship = current.value < previous.value ? "left" : "right"
       previous.public_send("#{relationship}=", nil) # "current as an extra pointer is critical here"
-      p "previous value: #{previous.value}"
-      p "previous right: #{previous.right}"
-      p "previous left: #{previous.left}"
-
 
     end
 
