@@ -72,12 +72,9 @@ class Tree
       del_parent_relationship = value < del_node_parent.value ? "left" : "right"
     end
 
-    p "deletion node value = #{deletion_node.value}"
-    p "deletion node left = #{deletion_node.left}"
-    p "deletion node right = #{deletion_node.right}"
+
     # NO children:
     if deletion_node.left.nil? && deletion_node.right.nil?
-       p "entered no child condition"
       if del_node_parent.nil? # root edge case
         @root = nil
         return
@@ -89,7 +86,6 @@ class Tree
     if (deletion_node.left.nil? && !deletion_node.right.nil?) || (!deletion_node.left.nil? && deletion_node.right.nil?)
       child_relationship = deletion_node.left ? "left" : "right"
 
-      p "entered one child condition"
       if del_node_parent.nil? # root edge case
         @root = deletion_node.public_send(child_relationship)
         return
@@ -101,8 +97,6 @@ class Tree
 
     # TWO child policy:
     if !deletion_node.left.nil? && !deletion_node.right.nil?
-      p "entered two child condition"
-
       # find the smallest big guy aka "inorder successor":
       previous = current
       current = current.right
