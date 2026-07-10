@@ -116,5 +116,15 @@ class Tree
     end
 
   end
+  
+  def level_order(block)
+    # return an enumerable if no block is given
+    return to_enum(:level_order) unless block_given?
+    # traverse the tree in level order
+    # yield each value to the block
+  end
+
+
+
 
 end

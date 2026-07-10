@@ -183,4 +183,11 @@ describe "delete" do
     test.pretty_print
     expect(test.root.value).to eq(7)
   end
+
+  describe "level_order" do
+    it "returns an enum when no block is given" do
+      test = Tree.new([1, 3, 6, 7, 12, 15])
+      expect(test.level_order(6)).to be_an(Enumerator)
+    end
+  end
 end
