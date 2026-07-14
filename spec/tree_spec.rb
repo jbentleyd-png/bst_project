@@ -342,3 +342,41 @@ describe "postorder" do
     expect(result).to eq([3, 1, 7, 15, 12, 6].map {|e| e * 2})
   end
 end
+
+describe "depth" do
+
+
+  it "returns nil if tree is empty" do
+    test = Tree.new([])
+    expect(test.depth(9)).to eq(nil)
+  end
+  
+  it "returns nil if node is not found" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    expect(test.depth(8)).to eq(nil)
+  end
+
+  it "returns the number of edges from teh root node" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    expect(test.depth(15)).to eq(2)
+  end  
+  
+  it "works three layers deep" do 
+    input = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+    test = Tree.new(input)
+    expect(test.depth(6345)).to eq(3)
+  end  
+
+end
+
+describe "height" do
+
+
+  it "returns an enum when no block is given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    expect(test.postorder).to be_an(Enumerator)
+
+  end
+
+  
+end

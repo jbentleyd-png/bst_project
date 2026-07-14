@@ -181,14 +181,29 @@ class Tree
   def postorder(current = @root, &block)
     return to_enum(:postorder) unless block_given?
     return self if current.nil?
-    
+
     postorder(current.left, &block)
     postorder(current.right, &block)
     yield(current.value) 
 
-    self # yielding...nothing?
+    self
   end
 
+  def depth(value)
+    return nil if @root.nil?
+    current = @root
+    depth = 0
+    loop do
+      return depth if value == current.value 
+      break if current.right.nil?
+      current = value < current.value ? current.left : current.right
+      depth += 1
+    end
+    nil
+  end
 
+  def height
+    
+  end
 
 end
