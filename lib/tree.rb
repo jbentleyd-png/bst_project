@@ -134,13 +134,24 @@ class Tree
 
   end
 
-  def level_order(block)
+  # no () style argument needed, blocks are passed differently.
+  def level_order # essentially ".each" for the tree, in the order we want
+    
     # return an enumerable if no block is given
     return to_enum(:level_order) unless block_given?
-    # traverse the tree in level order
-    let queue =[]
-    
-    # yield each value to the block
+    # traverse the tree in level order & yield each value to the block
+    queue =[@root]
+
+    loop do 
+      current = queue.shift
+      break if current.nil?
+      yield(current.value)
+      queue.push current.left unless current.left == nil
+      queue.push current.right unless current.right == nil
+    end
+
+    self # enables method chaining even after a block
+
   end
 
 

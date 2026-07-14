@@ -199,9 +199,32 @@ describe "delete" do
     end
   end
   describe "level_order" do
-    xit "returns an enum when no block is given" do
+
+
+    it "returns an enum when no block is given" do
       test = Tree.new([1, 3, 6, 7, 12, 15])
-      expect(test.level_order(6)).to be_an(Enumerator)
+      expect(test.level_order).to be_an(Enumerator)
+
+    end
+
+    it "yields to the block" do
+      test = Tree.new([1, 3, 6, 7, 12, 15])
+      values = []
+      test.level_order { |value| values << value }
+      expect(values).to eq([6, 1, 12, 3, 7, 15])
+
+    end
+    it "returns itself when block given" do
+      test = Tree.new([1, 3, 6, 7, 12, 15])
+      values = []
+      result = test.level_order { |value| values << value }
+      expect(result).to eq(test)
+    end
+
+    it "allows chaining by returning enumerator" do
+      test = Tree.new([1, 3, 6, 7, 12, 15])
+      result = test.level_order.map {|value| value * 2}
+      expect(result).to eq([12, 2, 24, 6, 14, 30])
     end
   end
 end
