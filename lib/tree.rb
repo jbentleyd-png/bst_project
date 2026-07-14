@@ -117,10 +117,29 @@ class Tree
 
   end
   
+  def print_level_order
+    queue =[@root]
+    nodes = 0
+
+    loop do 
+      current = queue.shift
+      break if current.nil?
+      print "#{current.value}, "
+      queue.push current.left unless current.left == nil
+      queue.push current.right unless current.right == nil
+      nodes += 1
+    end
+    p "nodes = #{nodes}"
+    nodes
+
+  end
+
   def level_order(block)
     # return an enumerable if no block is given
     return to_enum(:level_order) unless block_given?
     # traverse the tree in level order
+    let queue =[]
+    
     # yield each value to the block
   end
 
