@@ -202,7 +202,31 @@ class Tree
     nil
   end
 
-  def height
+  def leaf_search(node, height = 0)
+    return height if node.right.nil? && node.left.nil?
+    
+    height += 1 
+      
+    left_height =  node.left.nil? ? 0 : leaf_search(node.left, height) 
+    right_height = node.right.nil? ? 0 : leaf_search(node.right, height) 
+    # compare left vs right
+    [left_height, right_height].max
+
+  end
+  
+  def height(value)
+    return nil if @root.nil?
+    current = @root
+
+    # find the node in question:
+    loop do
+      break if value == current.value 
+      return nil if current.right.nil?
+      current = value < current.value ? current.left : current.right
+    end
+
+    # calculate height: (recursive)
+    leaf_search(current)
     
   end
 
