@@ -127,6 +127,7 @@ describe "insert" do
 end
 
 describe "delete" do
+
   xit "deletes nothing if the value is not found" do
     test = Tree.new([74])
     expect(test.delete(4)).to eq(nil)
@@ -166,7 +167,7 @@ describe "delete" do
     test.delete(12)
     test.pretty_print
     expect(test.root.right.value).to eq(15)
-  end
+  end 
 
   xit "deletes a node on the LEFT wxith two children" do
     test = Tree.new([1, 2, 3, 6, 7, 12, 15])
@@ -184,47 +185,84 @@ describe "delete" do
     expect(test.root.value).to eq(7)
   end
 
-
-  describe "print_level_order" do
-    it "prints the right number of nodes" do
-      test = Tree.new([1, 3, 6, 7, 12, 15])
-      test.pretty_print
-      expect(test.print_level_order).to eq(6)
-    end
-
-    it "works on a bigger tree" do
-      test = Tree.new([1, 4, 23, 8, 3, 5, 7, 9, 67, 6345, 324])
-      test.pretty_print
-      expect(test.print_level_order).to eq(11)
-    end
+end
+describe "print_level_order" do
+  it "prints the right number of nodes" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    test.pretty_print
+    expect(test.print_level_order).to eq(6)
   end
-  describe "level_order" do
 
-
-    it "returns an enum when no block is given" do
-      test = Tree.new([1, 3, 6, 7, 12, 15])
-      expect(test.level_order).to be_an(Enumerator)
-
-    end
-
-    it "yields to the block" do
-      test = Tree.new([1, 3, 6, 7, 12, 15])
-      values = []
-      test.level_order { |value| values << value }
-      expect(values).to eq([6, 1, 12, 3, 7, 15])
-
-    end
-    it "returns itself when block given" do
-      test = Tree.new([1, 3, 6, 7, 12, 15])
-      values = []
-      result = test.level_order { |value| values << value }
-      expect(result).to eq(test)
-    end
-
-    it "allows chaining by returning enumerator" do
-      test = Tree.new([1, 3, 6, 7, 12, 15])
-      result = test.level_order.map {|value| value * 2}
-      expect(result).to eq([12, 2, 24, 6, 14, 30])
-    end
+  it "works on a bigger tree" do
+    test = Tree.new([1, 4, 23, 8, 3, 5, 7, 9, 67, 6345, 324])
+    test.pretty_print
+    expect(test.print_level_order).to eq(11)
   end
 end
+describe "level_order" do
+  it "returns an enum when no block is given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    expect(test.level_order).to be_an(Enumerator)
+
+  end
+
+  it "yields to the block" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    values = []
+    test.level_order { |value| values << value }
+    expect(values).to eq([6, 1, 12, 3, 7, 15])
+
+  end
+  it "returns itself when block given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    values = []
+    result = test.level_order { |value| values << value }
+    expect(result).to eq(test)
+  end
+
+  it "allows chaining by returning enumerator" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    result = test.level_order.map {|value| value * 2}
+    expect(result).to eq([12, 2, 24, 6, 14, 30])
+  end
+ end
+describe "preorder" do
+
+
+  it "returns an enum when no block is given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    expect(test.preorder).to be_an(Enumerator)
+
+  end
+
+  it "yields to the block" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    values = []
+    test.preorder { |value| values << value }
+    test.pretty_print
+    expect(values).to eq([6, 1, 3, 12, 7, 15])
+
+  end
+  it "returns itself when block given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    values = []
+    result = test.preorder { |value| values << value }
+    expect(result).to eq(test)
+  end
+
+  it "returns its empty self when block given" do
+    test = Tree.new([])
+    values = []
+    result = test.preorder { |value| values << value }
+    expect(result).to eq(test)
+  end
+
+
+  it "allows chaining by returning enumerator" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    result = test.preorder.map {|value| value * 2}
+    expect(result).to eq([12, 2, 6, 24, 14, 30])
+  end
+end
+
+

@@ -134,6 +134,7 @@ class Tree
 
   end
 
+
   # no () style argument needed, blocks are passed differently.
   def level_order # essentially ".each" for the tree, in the order we want
     
@@ -146,14 +147,35 @@ class Tree
       current = queue.shift
       break if current.nil?
       yield(current.value)
-      queue.push current.left unless current.left == nil
-      queue.push current.right unless current.right == nil
+      queue.push current.left unless current.left.nil?
+      queue.push current.right unless current.right.nil?
     end
 
     self # enables method chaining even after a block
 
   end
 
+  def preorder(current = @root, &block)
+    return to_enum(:preorder) unless block_given?
+    
+    return self if current.nil? # do self here just in case a block is passed but it's an empty tree
+    yield(current.value)
+    
+    preorder(current.left, &block) # pass the block to the recursive call, too
+    preorder(current.right, &block)
+
+    self
+  end
+
+  def inorder 
+    return to_enum(:level_order) unless block_given?
+    self
+  end
+
+  def postorder 
+    return to_enum(:level_order) unless block_given?
+    self
+  end
 
 
 
