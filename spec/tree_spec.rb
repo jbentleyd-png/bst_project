@@ -304,3 +304,41 @@ describe "inorder" do
   end
 end
 
+describe "postorder" do
+
+
+  it "returns an enum when no block is given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    expect(test.postorder).to be_an(Enumerator)
+
+  end
+
+  it "yields to the block" do
+    test = Tree.new([6, 1, 3, 12, 7, 15])
+    values = []
+    test.postorder { |value| values << value }
+    test.pretty_print
+    expect(values).to eq([3, 1, 7, 15, 12, 6])
+
+  end
+  it "returns itself when block given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    values = []
+    result = test.postorder { |value| values << value }
+    expect(result).to eq(test)
+  end
+
+  it "returns its empty self when block given" do
+    test = Tree.new([])
+    values = []
+    result = test.postorder { |value| values << value }
+    expect(result).to eq(test)
+  end
+
+
+  it "allows chaining by returning enumerator" do
+    test = Tree.new([6, 1, 3, 12, 7, 15])
+    result = test.postorder.map {|value| value * 2}
+    expect(result).to eq([3, 1, 7, 15, 12, 6].map {|e| e * 2})
+  end
+end

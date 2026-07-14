@@ -180,7 +180,13 @@ class Tree
 
   def postorder(current = @root, &block)
     return to_enum(:postorder) unless block_given?
-    self
+    return self if current.nil?
+    
+    postorder(current.left, &block)
+    postorder(current.right, &block)
+    yield(current.value) 
+
+    self # yielding...nothing?
   end
 
 
