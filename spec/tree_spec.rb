@@ -265,4 +265,42 @@ describe "preorder" do
   end
 end
 
+describe "inorder" do
+
+
+  it "returns an enum when no block is given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    expect(test.inorder).to be_an(Enumerator)
+
+  end
+
+  it "yields to the block" do
+    test = Tree.new([6, 1, 3, 12, 7, 15])
+    values = []
+    test.inorder { |value| values << value }
+    test.pretty_print
+    expect(values).to eq([1, 3, 6, 7, 12, 15])
+
+  end
+  it "returns itself when block given" do
+    test = Tree.new([1, 3, 6, 7, 12, 15])
+    values = []
+    result = test.inorder { |value| values << value }
+    expect(result).to eq(test)
+  end
+
+  it "returns its empty self when block given" do
+    test = Tree.new([])
+    values = []
+    result = test.inorder { |value| values << value }
+    expect(result).to eq(test)
+  end
+
+
+  it "allows chaining by returning enumerator" do
+    test = Tree.new([6, 1, 3, 12, 7, 15])
+    result = test.inorder.map {|value| value * 2}
+    expect(result).to eq([2, 6, 12, 14, 24, 30])
+  end
+end
 
