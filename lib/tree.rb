@@ -44,14 +44,27 @@ class Tree
 
   def insert(value) 
     current = @root
+    relationship = nil
     loop do
+      p "current node : #{current.value}"
       return nil if value == current.value 
-      break if current.right.nil? # reached a terminal node 
-      current = value < current.value ? current.left : current.right # traverse
+      if value > current.value && !current.right.nil?
+        current = current.right
+      end
+      if value > current.value && current.right.nil?
+        relationship = "right"
+        break
+      end
+      if value < current.value && !current.left.nil?
+        current = current.left
+      end
+      if value < current.value && current.left.nil?
+        relationship = "left"
+        break
+      end
     end
-    relationship = value < current.value ? "left" : "right"
-    current.public_send("#{relationship}=", Node.new(value)) # NOT:     current.public_send(relationship) = Node.new(value)
-    false
+    new_node = current.public_send("#{relationship}=", Node.new(value)) # NOT:     current.public_send(relationship) = Node.new(value)
+    new_node
   end
   
   def delete(value)
@@ -228,6 +241,12 @@ class Tree
     # calculate height: (recursive)
     leaf_search(current)
     
+  end
+
+  def balanced?(current = @root)
+    return false if (self.height(current.left.value) - self.height(current.right.value)).abs > 1
+    
+    true
   end
 
 end

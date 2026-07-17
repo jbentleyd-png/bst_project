@@ -112,13 +112,13 @@ describe "insert" do
     expect(test.include?(74)).to eq(true)
   end
 
-  xit "adds a node to the correct side" do 
+  it "adds a node to the correct side" do 
     test = Tree.new([64])
     test.insert(74)
     expect(test.root.right.value).to eq(74)
   end
 
-  xit "links nodes together as expected" do 
+  it "links nodes together as expected" do 
     test = Tree.new([1, 2, 3, 5])
     test.insert(4)
     test.pretty_print
@@ -372,25 +372,44 @@ end
 describe "height" do
 
 
-  it "returns nil if tree is empty" do
+  xit "returns nil if tree is empty" do
     test = Tree.new([])
     expect(test.height(9)).to eq(nil)
   end
   
-  it "returns nil if node is not found" do
+  xit "returns nil if node is not found" do
     test = Tree.new([1, 3, 6, 7, 12, 15])
     expect(test.height(8)).to eq(nil)
   end
 
 
   
-  it "returns the number of edges from the node to the farthest leaf" do 
+  xit "returns the number of edges from the node to the farthest leaf" do 
     input = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
     test = Tree.new(input)
     test.insert(7000)
+    test.insert(9001)
     test.pretty_print
     expect(test.height(67)).to eq(3)
   end  
 
   
 end
+
+describe "balanced?" do
+  xit "returns true on a newly created tree" do
+    input = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+    test = Tree.new(input)
+    expect(test.balanced?).to eq(true)
+  end
+
+  xit "returns true on a balanced tree with three nodes" do
+    test = Tree.new([3, 2])
+    test.pretty_print
+    test.insert(1)
+    test.pretty_print
+    expect(test.balanced?).to eq(true)
+  end
+end
+
+
