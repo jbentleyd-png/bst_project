@@ -412,7 +412,7 @@ describe "balanced?" do
   end
 
 
-  it "returns false when the tree is unbalanced" do
+  it "returns false when big tree is unbalanced" do
     input = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
     test = Tree.new(input)
     test.insert(7000)
@@ -420,6 +420,29 @@ describe "balanced?" do
     test.pretty_print
     expect(test.balanced?).to eq(false)
   end    
+end
+
+describe "rebalance" do
+  
+  it "doesn't execute on a balanced tree" do
+    test = Tree.new([1,2,3,4,5,6,7,8,9])
+    expect(test.rebalance).to eq(nil)
+  end
+  it "rebalances a big 'ol tree" do
+    input = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+    test = Tree.new(input)
+    test.insert(7000)
+    test.insert(9001)
+    puts "Unbalanced:"
+    test.pretty_print
+    
+    test.rebalance
+    puts "Rebalanced:"
+    test.pretty_print
+
+
+    expect(test.balanced?).to eq(true)
+  end
 end
 
 

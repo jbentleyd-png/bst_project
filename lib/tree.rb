@@ -248,4 +248,11 @@ class Tree
     true
   end
 
+  def rebalance
+    return nil if self.balanced?
+    values = []
+    self.inorder { |value| values << value }
+    @root = self.build_tree(values)  
+  end
+
 end
