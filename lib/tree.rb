@@ -46,7 +46,6 @@ class Tree
     current = @root
     relationship = nil
     loop do
-      p "current node : #{current.value}"
       return nil if value == current.value 
       if value > current.value && !current.right.nil?
         current = current.right
